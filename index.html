@@ -1,199 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta
-            name="viewport"
-            content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
-    <title>
-        Intro to MapView | Sample | ArcGIS Maps SDK for
-        JavaScript 4.26
-    </title>
-    <style>
-        html,
-        body,
-        #viewDiv {
-            padding: 0;
-            margin: 0;
-            height: 100%;
-            width: 100%;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="initial-scale=1,maximum-scale=1,user-scalable=no"
+  />
+  <title>
+    Intro to MapView - Create a 2D map | Sample | ArcGIS Maps SDK for
+    JavaScript 4.26
+  </title>
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
 
-    <style>
-        /* 样式表，用于设置网页样式 */
+  <style>
+    /* 样式表，用于设置网页样式 */
 
-        /* 设置页眉样式 */
-        header {
-            background-color: #333;   /* 设置背景颜色为灰色 */
-            color: #fff;              /* 设置文字颜色为白色 */
-            padding: 5px;            /* 设置内边距为 10 像素 */
-            text-align: center;       /* 设置文本居中对齐 */
-            font-size: 12px;          /* 设置字体大小为 25 像素 */
-        }
-        .header img {
-            width: 1px; /* 修改图片的宽度 */
-            height: 1px; /* 修改图片的高度 */
-            border-radius: 1%;
-            margin-right: 10px; /* 添加图片的右边距 */
-        }
-    </style>
+    /* 设置页眉样式 */
+    header {
+      background-color: #333;   /* 设置背景颜色为灰色 */
+      color: #fff;              /* 设置文字颜色为白色 */
+      padding: 5px;            /* 设置内边距为 10 像素 */
+      text-align: center;       /* 设置文本居中对齐 */
+      font-size: 12px;          /* 设置字体大小为 25 像素 */
+    }
+  </style>
 
-    <link
-            rel="stylesheet"
-            href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
-    />
-    <script src="https://js.arcgis.com/4.26/"></script>
+  <link
+    rel="stylesheet"
+    href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+  />
+  <script src="https://js.arcgis.com/4.26/"></script>
 
-    <script>
-        require([
-            "esri/Map",
-            "esri/views/MapView",
-            "esri/layers/FeatureLayer",
-            "esri/widgets/Legend",
-            "esri/widgets/ScaleBar",
-            "esri/widgets/LayerList",
-            "esri/widgets/Search",
-            "esri/widgets/BasemapToggle",
-            "esri/widgets/BasemapGallery",
-            "esri/widgets/Compass"
-        ], (
-            Map,
-            MapView,
-            FeatureLayer,
-            Legend,
-            ScaleBar,
-            LayerList,
-            Search,
-            BasemapToggle,
-            BasemapGallery,
-            Compass
-        ) => {
-            // 创建一个新的要素图层，它从指定的 URL 加载要素数据
-            var flayer = new FeatureLayer({
-                url: "https://www.geosceneonline.cn/server/rest/services/Hosted/sum1/FeatureServer"
-            });
-            var flayer1 = new FeatureLayer({
-                url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市地铁1号线线路/FeatureServer"
-            });
-            var flayer2 = new FeatureLayer({
-                url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市地铁2号线线路/FeatureServer"
-            });
-            var flayer3 = new FeatureLayer({
-                url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市地铁3号线线路/FeatureServer"
-            });
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "esri/widgets/Legend",
+      "esri/widgets/ScaleBar",
+      "esri/widgets/LayerList",
+      "esri/widgets/Search",
+      "esri/widgets/BasemapToggle",
+      "esri/widgets/BasemapGallery",
+      "esri/widgets/Compass"
+    ], (
+      Map,
+      MapView,
+      FeatureLayer,
+      Legend,
+      ScaleBar,
+      LayerList,
+      Search,
+      BasemapToggle,
+      BasemapGallery,
+      Compass
+    ) => {
+      // 创建一个新的要素图层，它从指定的 URL 加载要素数据
+      var flayer = new FeatureLayer({
+        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/sum1/FeatureServer"
+      });
+      var flayer1 = new FeatureLayer({
+        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市地铁1号线线路/FeatureServer"
+      });
+      var flayer2 = new FeatureLayer({
+        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市地铁2号线线路/FeatureServer"
+      });
+      var flayer3 = new FeatureLayer({
+        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市地铁3号线线路/FeatureServer"
+      });
 
-            // 创建一个新的地图对象，并指定了初始底图和地形
-            const map = new Map({
-                basemap: "streets-vector", // The initial basemap to toggle from
-                ground: "world-elevation"
-            });
+      // 创建一个新的地图对象，并指定了初始底图和地形
+      const map = new Map({
+        basemap: "streets-vector", // The initial basemap to toggle from
+        ground: "world-elevation"
+      });
 
-            // 将要素图层添加到地图中
-            map.layers.add(flayer3);
-            map.layers.add(flayer2);
-            map.layers.add(flayer1);
-            map.layers.add(flayer);
+      // 将要素图层添加到地图中
+      map.layers.add(flayer3);
+      map.layers.add(flayer2);
+      map.layers.add(flayer1);
+      map.layers.add(flayer);
 
-            // 创建一个新的 MapView 对象，并将其与指定的 HTML 元素关联起来
-            const view = new MapView({
-                container: "viewDiv",
-                map: map,
-                zoom: 11,
-                center: [118.0894,24.4798] // longitude, latitude
-            });
+      // 创建一个新的 MapView 对象，并将其与指定的 HTML 元素关联起来
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        zoom: 6,
+        center: [118, 25] // longitude, latitude
+      });
 
-            // 创建一个新的图例对象，并将其添加到地图视图中
-            var legend = new Legend({
-                view: view,
-                layerInfos: [
-                    {
-                        layer: flayer,
-                        title: "厦门市旅游点"
-                    }
-                ]
-            });
+      // 创建一个新的比例尺对象，并将其添加到地图视图中
+      let scaleBar = new ScaleBar({
+        //比例尺
+        view: view,
+        style: "ruler",
+        unit: "metric"
+      });
+      view.ui.add(scaleBar, {
+        position: "bottom-left"
+      });
 
+      //创建一个新的指南针对象，并将其添加到地图视图中
+      let compass = new Compass({
+        view: view
+      });
+      view.ui.add(compass, "top-left");
 
-            let compass = new Compass({
-                view: view
-            });
-            view.ui.add(compass, "top-left");
+      // 创建一个新的图表对象，并将其添加到地图视图中
+      let layerList = new LayerList({
+        //图表
+        view: view
+      });
+      view.ui.add(layerList, {
+        position: "top-left"
+      });
 
-            // 创建一个新的比例尺对象，并将其添加到地图视图中
-            let scaleBar = new ScaleBar({
-                //比例尺
-                view: view,
-                style: "ruler",
-                unit: "metric"
-            });
-            view.ui.add(scaleBar, {
-                position: "bottom-left"
-            });
+      // 创建一个新的图例对象，并将其添加到地图视图中
+      var legend = new Legend({
+        view: view,
+        layerInfos: [
+          {
+            layer: flayer,
+            title: "厦门市旅游点"
+          }
+        ]
+      });
+      view.ui.add(legend, "top-left");
 
-            // 创建一个新的搜索框对象，并将其添加到地图视图中
-            const searchWidget = new Search({
-                //搜索框
-                view: view
-            });
-            view.ui.add(searchWidget, {
-                position: "top-right",
-                index: 2
-            });
+      // 创建一个新的搜索框对象，并将其添加到地图视图中
+      const searchWidget = new Search({
+        //搜索框
+        view: view
+      });
+      view.ui.add(searchWidget, {
+        position: "top-right",
+        index: 2
+      });
 
-            // 创建一个新的图表对象，并将其添加到地图视图中
-            let layerList = new LayerList({
-                //图表
-                view: view
-            });
-            view.ui.add(layerList, {
-                position: "top-left"
-            });
-            const editor = new Editor({
-                view: view
-            });
-            view.ui.add(editor, {
-                position: "top-right",
-            });
+      // 创建一个新的底图切换器对象，并将其添加到地图视图中
+      const basemapToggle = new BasemapToggle({
+        view: view,
+        nextBasemap: "hybrid"
+      });
 
-            // 创建一个新的底图切换器对象，并将其添加到地图视图中
-            const basemapToggle = new BasemapToggle({
-                view: view,
-                nextBasemap: "hybrid"
-            });
-            view.ui.add(basemapToggle, "bottom-right");
+      view.ui.add(basemapToggle, "bottom-right");
 
-            // 创建一个新的底图库对象，并将其添加到地图视图中
-            let basemapGallery = new BasemapGallery({
-                view: view
-            });
-            // Add widget to the top right corner of the view
-            view.ui.add(basemapGallery, {
-                position: "top-right"
-            });
-            view.ui.add(legend, "top-left");
-
-
-
-
-
-        });
-    </script>
+      // 创建一个新的底图库对象，并将其添加到地图视图中
+      let basemapGallery = new BasemapGallery({
+        view: view
+      });
+      // Add widget to the top right corner of the view
+      view.ui.add(basemapGallery, {
+        position: "top-right"
+      });
+    });
+  </script>
 </head>
 
 <body>
 <!-- 创建页眉 -->
 <header>
-    <!-- 添加页眉标题 -->
 
-    <h1><!-- 在页眉中添加一个<a>元素 -->
-        <a href="https://github.com" target="_blank">
-            <!-- 在<a>元素中添加一个<img>元素，使用GitHub的图标网址 -->
-            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="50" height="50">
-        </a>厦门市旅游图</h1>
-    <!-- 在页眉中添加一张可爱的图片，使用搜索结果中的网址 -->
-
+  <h1><!-- 在页眉中添加一个<a>元素 -->
+    <a href="https://github.com" target="_blank">
+      <!-- 在<a>元素中添加一个<img>元素，使用GitHub的图标网址 -->
+      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="50" height="50">
+    </a>
+    <a href="https://github.com" target="_blank">
+      <title></title>
+    </a>
+    厦门市旅游图</h1>
 </header>
 
 <div id="viewDiv"></div>
