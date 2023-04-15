@@ -67,7 +67,7 @@
     ) => {
       // 创建一个新的要素图层，它从指定的 URL 加载要素数据
       var flayer = new FeatureLayer({
-        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/sum1/FeatureServer"
+        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市岛内旅游景点_查看图层/FeatureServer/0"
       });
       var flayer1 = new FeatureLayer({
         url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市地铁1号线线路/FeatureServer"
@@ -77,6 +77,12 @@
       });
       var flayer3 = new FeatureLayer({
         url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市地铁3号线线路/FeatureServer"
+      });
+      var flayer4 = new FeatureLayer({
+        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市岛内旅游景点_查看图层/FeatureServer/1"
+      });
+      var flayer5 = new FeatureLayer({
+        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/厦门市岛内旅游景点_查看图层/FeatureServer/2"
       });
 
       // 创建一个新的地图对象，并指定了初始底图和地形
@@ -89,13 +95,15 @@
       map.layers.add(flayer3);
       map.layers.add(flayer2);
       map.layers.add(flayer1);
+      map.layers.add(flayer4);
+      map.layers.add(flayer5);
       map.layers.add(flayer);
 
       // 创建一个新的 MapView 对象，并将其与指定的 HTML 元素关联起来
       const view = new MapView({
         container: "viewDiv",
         map: map,
-        zoom: 10,
+        zoom: 11,
         center: [118.114547,24.514324] // longitude, latitude
       });
 
@@ -207,4 +215,3 @@
 <div id="basemapDiv"></div>
 </body>
 </html>
-
