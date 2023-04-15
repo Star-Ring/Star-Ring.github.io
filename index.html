@@ -50,7 +50,8 @@
       "esri/widgets/Search",
       "esri/widgets/BasemapToggle",
       "esri/widgets/BasemapGallery",
-      "esri/widgets/Compass"
+      "esri/widgets/Compass",
+      "esri/widgets/Expand"
     ], (
             Map,
             MapView,
@@ -61,7 +62,8 @@
             Search,
             BasemapToggle,
             BasemapGallery,
-            Compass
+            Compass,
+            Expand
     ) => {
       // 创建一个新的要素图层，它从指定的 URL 加载要素数据
       var flayer = new FeatureLayer({
@@ -119,9 +121,7 @@
         //图表
         view: view
       });
-      view.ui.add(layerList, {
-        position: "top-left"
-      });
+      view.ui.add(layerList, "top-left");
 
       // 创建一个新的图例对象，并将其添加到地图视图中
       var legend = new Legend({
@@ -158,10 +158,32 @@
         view: view
       });
       // Add widget to the top right corner of the view
-      view.ui.add(basemapGallery, {
-        position: "top-right"
+      basemapGalleryExpand = new Expand({
+        expandIconClass: "esri-icon-layer-list",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+        // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
+        view: view,
+        content: basemapGallery
       });
+      view.ui.add(basemapGalleryExpand, "top-right");
     });
+
+    const bookmarks = new Bookmarks({
+      view: view,
+      // allows bookmarks to be added, edited, or deleted
+      editingEnabled: true,
+      visibleElements: {
+        time: false // don't show the time (h:m:s) next to the date
+      }
+    });
+
+    const bkExpand = new Expand({
+      view: view,
+      content: bookmarks,
+      expanded: true
+    });
+
+    // Add the widget to the top-right corner of the view
+    view.ui.add(bkExpand, "top-right");
   </script>
 </head>
 
@@ -185,3 +207,4 @@
 <div id="basemapDiv"></div>
 </body>
 </html>
+
